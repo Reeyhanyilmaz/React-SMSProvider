@@ -2,9 +2,11 @@ import axios from "axios";
 import { setUserToken, setUser } from "../../redux/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {Flex, Box, Heading, FormControl, FormLabel, Button, Input} from "@chakra-ui/react";
+import {useNavigate} from 'react-router-dom';
 
 function Login() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const URL = "http://c4f2.acsight.com:7710/connect/token";
   const user = useSelector((state) => state.auth.user);
 
@@ -24,6 +26,7 @@ function Login() {
 
       if (resp.status === 200) {
         dispatch(setUserToken(resp.data.access_token));
+        navigate("/table");
         console.log("resp ", resp.data.access_token);
       } else {
         console.log("resp", resp);
