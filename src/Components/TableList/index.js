@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { setPartnerProviders } from "../../redux/provider/providerSlice";
-import {Flex, Table, Thead, Tbody, Tr, Th, Td, TableCaption, TableContainer, Alert, AlertIcon, Spinner, Switch } from "@chakra-ui/react";
+import {Box, Button, Flex, Table, Thead, Tbody, Tr, Th, Td, TableCaption, TableContainer, Alert, AlertIcon, Spinner, Switch } from "@chakra-ui/react";
 
 function TableList() {
   const dispatch = useDispatch();
@@ -94,6 +94,9 @@ function TableList() {
 
   return (
     <div style={{ marginRight: "20px", marginLeft: "20px" }}>
+      <h1 style={{fontSize: "30px", marginBlock: "10px"}}>SMS Provider Table</h1>
+        <Button colorScheme="teal" size="sm">Add New Provider</Button>
+
       <TableContainer>
         <Table
           variant="striped"
@@ -131,13 +134,13 @@ function TableList() {
                 <Td>{item.secretKey}</Td>
                 <Td>{item.accountSID}</Td>
                 <Td>
-                    <Switch
-                      size="sm"
-                      colorScheme="teal"
-                      isChecked={item.status}
-                      isDisabled={statusLoading}
-                      onChange={() => handleSwitchStatus(item.id, !item.status)}
-                    />
+                  <Switch
+                    size="sm"
+                    colorScheme="teal"
+                    isChecked={item.status}
+                    isDisabled={statusLoading}
+                    onChange={() => handleSwitchStatus(item.id, !item.status)}
+                  />
                 </Td>
                 <Td>{formatDate(item.updatedWhen)}</Td>
               </Tr>
