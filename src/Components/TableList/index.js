@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { setPartnerProviders } from "../../redux/provider/providerSlice";
-import {Flex, Table, Thead, Tbody, Tr, Th, Td, TableCaption, TableContainer, Alert, AlertIcon, Spinner} from "@chakra-ui/react";
+import {Flex, Table, Thead, Tbody, Tr, Th, Td, TableCaption, TableContainer, Alert, AlertIcon, Spinner, Switch } from "@chakra-ui/react";
 
 function TableList() {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
+  const [statusLoading, setStatusLoading] = useState(false);
+  const [statusError, setStatusError] = useState(false);
   const partnerProviders = useSelector((state) => state.provider.partnerProviders);
   const providerEnums = ["", "PostaGuvercini" , "MobilDev", "JetSMS", "MailJet", "Twilio", "InfoBip", "Vonage"];
   const userToken = useSelector((state) => state.auth.userToken);
@@ -24,6 +26,23 @@ function TableList() {
   useEffect(() => {
     console.log("partnerProviders ", partnerProviders);
   }, [partnerProviders]);
+
+  const handleSwitchStatus = async (id, newStatus) =>{
+    axios.defaults.headers.common = {
+      Authorization: "Bearer " + userToken,
+    };
+
+    const statusURL = `http://c4f2.acsight.com:7770/api/system/change-stat-partner-sms-provider?id=${id}&stat=${newStatus === false ? 0 : 1}`;
+    setStatusLoading(true);
+    try {
+     const resp = await axios.post(statusURL);
+     console.log('resp', resp); 
+     setStatusLoading(false);
+     handleProvider(); 
+    }catch(error) {
+      console.log('error', error);
+    }
+  }
 
   const handleProvider = async () => {
     try {
@@ -74,18 +93,24 @@ function TableList() {
   }
 
   return (
-    <div style={{marginRight: "20px", marginLeft: "20px"}}>
+    <div style={{ marginRight: "20px", marginLeft: "20px" }}>
       <TableContainer>
-        <Table variant="striped" colorScheme="teal" size='sm' maxWidth="50%" mt="4" >
+        <Table
+          variant="striped"
+          colorScheme="teal"
+          size="sm"
+          maxWidth="50%"
+          mt="4"
+        >
           <TableCaption>SMS Provider List</TableCaption>
           <Thead>
             <Tr>
               <Th>providerID</Th>
               <Th>baseURL</Th>
-              <Th >fromName </Th>
+              <Th>fromName </Th>
               <Th>username</Th>
               <Th>password</Th>
-              <Th >vendorCode</Th>
+              <Th>vendorCode</Th>
               <Th>apiKey</Th>
               <Th>secretKey</Th>
               <Th>accountSID</Th>
@@ -94,21 +119,29 @@ function TableList() {
             </Tr>
           </Thead>
           <Tbody>
-          {partnerProviders.map((item, i) => (
-            <Tr key={i}>
-              <Td>{providerEnums[item.providerID]}</Td>
-              <Td>{item.baseURL}</Td>
-              <Td>{item.fromName}</Td>
-              <Td>{item.username}</Td>
-              <Td>{item.password}</Td>
-              <Td>{item.vendorCode}</Td>
-              <Td>{item.apiKey}</Td>
-              <Td>{item.secretKey}</Td>
-              <Td>{item.accountSID}</Td>
-              <Td>{item.status}</Td>
-              <Td>{formatDate(item.updatedWhen)}</Td>
-            </Tr>
-          ))}
+            {partnerProviders.map((item, i) => (
+              <Tr key={i}>
+                <Td>{providerEnums[item.providerID]}</Td>
+                <Td>{item.baseURL}</Td>
+                <Td>{item.fromName}</Td>
+                <Td>{item.username}</Td>
+                <Td>{item.password}</Td>
+                <Td>{item.vendorCode}</Td>
+                <Td>{item.apiKey}</Td>
+                <Td>{item.secretKey}</Td>
+                <Td>{item.accountSID}</Td>
+                <Td>
+                    <Switch
+                      size="sm"
+                      colorScheme="teal"
+                      isChecked={item.status}
+                      isDisabled={statusLoading}
+                      onChange={() => handleSwitchStatus(item.id, !item.status)}
+                    />
+                </Td>
+                <Td>{formatDate(item.updatedWhen)}</Td>
+              </Tr>
+            ))}
           </Tbody>
         </Table>
       </TableContainer>
