@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { setPartnerProviders } from "../../redux/provider/providerSlice";
-import {Table, Thead, Tbody, Tr, Th, Td, TableCaption, TableContainer, Alert, AlertIcon} from "@chakra-ui/react";
+import {Flex, Table, Thead, Tbody, Tr, Th, Td, TableCaption, TableContainer, Alert, AlertIcon, Spinner} from "@chakra-ui/react";
 
 function TableList() {
   const [isLoading, setIsLoading] = useState(true);
@@ -43,7 +43,17 @@ function TableList() {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <Flex justifyContent="center" alignItems="center" height="100vh">
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          size="xl"
+          color="teal.500"
+        />
+    </Flex>
+    );
   }
 
   if (isError) {
