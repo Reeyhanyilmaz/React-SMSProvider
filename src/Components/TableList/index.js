@@ -13,8 +13,16 @@ function TableList() {
   const userToken = useSelector((state) => state.auth.userToken);
   const URL = "http://c4f2.acsight.com:7770/api/system/sms-provider-list"; 
 
+  const formatDate = (params) => {
+    const dt = new Date(params);
+
+    return `
+    ${dt.getFullYear().toString().padStart(4, "0")}/${(dt.getMonth() + 1).toString().padStart(2, "0")}/${dt.getDate().toString().padStart(2, "0")} 
+    ${dt.getHours().toString().padStart(2, "0")}:${dt.getMinutes().toString().padStart(2, "0")}`;
+  }
+
   useEffect(() => {
-    console.log("partnerProviders :>> ", partnerProviders);
+    console.log("partnerProviders ", partnerProviders);
   }, [partnerProviders]);
 
   const handleProvider = async () => {
@@ -98,7 +106,7 @@ function TableList() {
               <Td>{item.secretKey}</Td>
               <Td>{item.accountSID}</Td>
               <Td>{item.status}</Td>
-              <Td>{item.updatedWhen}</Td>
+              <Td>{formatDate(item.updatedWhen)}</Td>
             </Tr>
           ))}
           </Tbody>
