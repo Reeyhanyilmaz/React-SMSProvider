@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { setPartnerProviders } from "../../redux/provider/providerSlice";
-import {Box, Button, Flex, Table, Thead, Tbody, Tr, Th, Td, TableCaption, TableContainer, Alert, AlertIcon, Spinner, Switch } from "@chakra-ui/react";
+import {Flex, Table, Thead, Tbody, Tr, Th, Td, TableCaption, TableContainer, Alert, AlertIcon, Spinner, Switch} from "@chakra-ui/react";
+import ModalComponent from "../ModalComponent";
 
 function TableList() {
   const dispatch = useDispatch();
@@ -95,7 +96,7 @@ function TableList() {
   return (
     <div style={{ marginRight: "20px", marginLeft: "20px" }}>
       <h1 style={{fontSize: "30px", marginBlock: "10px"}}>SMS Provider Table</h1>
-        <Button colorScheme="teal" size="sm">Add New Provider</Button>
+      <ModalComponent />
 
       <TableContainer>
         <Table
@@ -147,7 +148,7 @@ function TableList() {
             ))}
           </Tbody>
         </Table>
-      </TableContainer>
+      </TableContainer>     
     </div>
   );
 }
