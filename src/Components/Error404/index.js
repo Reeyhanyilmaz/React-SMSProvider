@@ -7,7 +7,7 @@ function Error404() {
       <Alert status="error" mt={3}>
         <AlertIcon />
         <AlertTitle>Error 404</AlertTitle>
-        <AlertDescription>Böyle bir sayfa bulunamadı!</AlertDescription>
+        <AlertDescription>This page was not found!</AlertDescription>
       </Alert>
     </div>
   );
