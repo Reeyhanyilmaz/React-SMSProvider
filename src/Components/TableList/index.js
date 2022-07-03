@@ -5,15 +5,13 @@ import { setPartnerProviders } from "../../redux/provider/providerSlice";
 import {Flex, Table, Thead, Tbody, Tr, Th, Td, TableCaption, TableContainer, Alert, AlertIcon, Spinner} from "@chakra-ui/react";
 
 function TableList() {
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-
-  const dispatch = useDispatch();
-  const URL = "http://c4f2.acsight.com:7770/api/system/sms-provider-list";
+  const partnerProviders = useSelector((state) => state.provider.partnerProviders);
+  const providerEnums = ["", "PostaGuvercini" , "MobilDev", "JetSMS", "MailJet", "Twilio", "InfoBip", "Vonage"];
   const userToken = useSelector((state) => state.auth.userToken);
-  const partnerProviders = useSelector(
-    (state) => state.provider.partnerProviders
-  );
+  const URL = "http://c4f2.acsight.com:7770/api/system/sms-provider-list"; 
 
   useEffect(() => {
     console.log("partnerProviders :>> ", partnerProviders);
@@ -26,17 +24,17 @@ function TableList() {
       };
       const { data } = await axios.get(URL);
       console.log("data", data);
-      if (data.info.statusCode === 200) {
-        dispatch(setPartnerProviders(data.data.partnerProviders));
-        console.log("partnerProviders", partnerProviders);
-      } else {
-        setIsError(true);
-      }
+          if (data.info.statusCode === 200) {
+            dispatch(setPartnerProviders(data.data.partnerProviders));
+            console.log("partnerProviders", partnerProviders);
+          } else {
+            setIsError(true);
+          }
     } catch (error) {
       setIsError(true);
     }
     setIsLoading(false);
-  };
+};
 
   useEffect(() => {
     handleProvider();
@@ -68,9 +66,9 @@ function TableList() {
   }
 
   return (
-    <div>
+    <div style={{marginRight: "20px", marginLeft: "20px"}}>
       <TableContainer>
-        <Table variant="striped" colorScheme="teal" size='sm' maxWidth="70%" mt="4">
+        <Table variant="striped" colorScheme="teal" size='sm' maxWidth="50%" mt="4" >
           <TableCaption>SMS Provider List</TableCaption>
           <Thead>
             <Tr>
@@ -90,7 +88,7 @@ function TableList() {
           <Tbody>
           {partnerProviders.map((item, i) => (
             <Tr key={i}>
-              <Td>{item.providerID}</Td>
+              <Td>{providerEnums[item.providerID]}</Td>
               <Td>{item.baseURL}</Td>
               <Td>{item.fromName}</Td>
               <Td>{item.username}</Td>
