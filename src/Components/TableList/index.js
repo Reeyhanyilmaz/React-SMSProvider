@@ -96,7 +96,7 @@ function TableList() {
   return (
     <div style={{ marginRight: "20px", marginLeft: "20px" }}>
       <h1 style={{fontSize: "30px", marginBlock: "10px"}}>SMS Provider Table</h1>
-      <ModalComponent />
+      <ModalComponent handleProvider={handleProvider} />
 
       <TableContainer>
         <Table

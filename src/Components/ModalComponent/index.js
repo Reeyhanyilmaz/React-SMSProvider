@@ -15,13 +15,32 @@ import {
 } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { useFormik } from "formik";
+import axios from "axios";
 
-function ModalComponent() {
+function ModalComponent({handleProvider}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = useRef(null);
   const finalRef = useRef(null);
   const providerEnums = useSelector((state) => state.provider.providerEnums);
   const shiftEnums = providerEnums.filter((item) => item.value !== 0);
+  const userToken = useSelector((state) => state.auth.userToken);
+
+  async function addNewProvider(values) {
+    const URL = "http://c4f2.acsight.com:7770/api/system/add-partner-sms-provider";
+    axios.defaults.headers.common = {
+      Authorization: "Bearer " + userToken,
+    };
+    try {
+      const resp = await axios.post(URL, values);
+      if(resp.data.success === true) {
+        handleProvider();
+        onClose();
+      }
+    }
+    catch (error) {
+      console.log("error", error);
+    }
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -40,7 +59,7 @@ function ModalComponent() {
       AuthToken: "",
     },
     onSubmit: (values) => {
-      console.log(values);
+      addNewProvider(values);
     },
   });
 
