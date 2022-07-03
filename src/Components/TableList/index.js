@@ -12,8 +12,8 @@ function TableList() {
   const [statusLoading, setStatusLoading] = useState(false);
   const [statusError, setStatusError] = useState(false);
   const partnerProviders = useSelector((state) => state.provider.partnerProviders);
-  const providerEnums = ["", "PostaGuvercini" , "MobilDev", "JetSMS", "MailJet", "Twilio", "InfoBip", "Vonage"];
   const userToken = useSelector((state) => state.auth.userToken);
+  const providerEnums = useSelector((state) => state.provider.providerEnums);
   const URL = "http://c4f2.acsight.com:7770/api/system/sms-provider-list"; 
 
   const formatDate = (params) => {
@@ -125,7 +125,7 @@ function TableList() {
           <Tbody>
             {partnerProviders.map((item, i) => (
               <Tr key={i}>
-                <Td>{providerEnums[item.providerID]}</Td>
+                <Td>{providerEnums[item.providerID].name}</Td>
                 <Td>{item.baseURL}</Td>
                 <Td>{item.fromName}</Td>
                 <Td>{item.username}</Td>
