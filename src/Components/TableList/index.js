@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { setPartnerProviders } from "../../redux/provider/providerSlice";
-import {Table, Thead, Tbody, Tr, Th, Td, TableCaption, TableContainer} from "@chakra-ui/react";
+import {Table, Thead, Tbody, Tr, Th, Td, TableCaption, TableContainer, Alert, AlertIcon} from "@chakra-ui/react";
 
 function TableList() {
   const [isLoading, setIsLoading] = useState(true);
@@ -47,7 +47,14 @@ function TableList() {
   }
 
   if (isError) {
-    return <div>Error!</div>;
+    return (
+      <div>
+        <Alert status="error">
+          <AlertIcon />
+           Error!
+        </Alert>
+      </div>
+    );
   }
 
   return (
