@@ -1,7 +1,7 @@
 import axios from "axios";
 import { setUserToken, setUser } from "../../redux/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
-import {Flex, Box, Heading, FormControl, FormLabel, Button, Input} from "@chakra-ui/react";
+import {Flex, Box, Heading, FormControl, FormLabel, Button, Input, Image} from "@chakra-ui/react";
 import {useNavigate} from 'react-router-dom';
 
 function Login() {
@@ -12,7 +12,6 @@ function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault(); //login olunca sayfa yenilenmesini engelledim.
-    console.log("user", user);
 
     try {
       const resp = await axios.post(URL, new URLSearchParams({
@@ -26,13 +25,12 @@ function Login() {
 
       if (resp.status === 200) {
         dispatch(setUserToken(resp.data.access_token));
-        navigate("/table");
-        console.log("resp ", resp.data.access_token);
+        navigate("/tableList");
       } else {
-        console.log("resp", resp);
+       alert("Something a wrong");
       }
     } catch (error) {
-      console.log("catch", error.response);
+      alert("No such user was found");
     }
   };
   return (
@@ -45,21 +43,27 @@ function Login() {
 
           <Box my={5} textAlign="left">
             <form onSubmit={handleLogin}>
-              <FormControl>
+              <FormControl isRequired>
                 <FormLabel>E-mail</FormLabel>
                 <Input
                   type="text"
                   placeholder="email@email.com"
-                  onChange={(e) => dispatch(setUser({ type: "email", value: e.target.value }))}
+                  onChange={(e) =>
+                    dispatch(setUser({ type: "email", value: e.target.value }))
+                  }
                 />
               </FormControl>
 
-              <FormControl mt={4}>
+              <FormControl mt={4} isRequired>
                 <FormLabel>Password</FormLabel>
                 <Input
                   type="password"
                   placeholder="password"
-                  onChange={(e) => dispatch(setUser({ type: "password", value: e.target.value }))}
+                  onChange={(e) =>
+                    dispatch(
+                      setUser({ type: "password", value: e.target.value })
+                    )
+                  }
                 />
               </FormControl>
 

@@ -103,7 +103,7 @@ function ModalComponent({handleProvider}) {
                 />
               </FormControl>
 
-              <FormControl isRequired >
+              <FormControl isRequired mt={4} >
                 <FormLabel>BaseURL</FormLabel>
                 <Input
                   name="BaseURL"
