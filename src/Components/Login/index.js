@@ -7,7 +7,7 @@ import {useNavigate} from 'react-router-dom';
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const URL = "http://c4f2.acsight.com:7710/connect/token";
+  const URL = "https://c4f2.acsight.com:7710/connect/token";
   const user = useSelector((state) => state.auth.user);
 
   const handleLogin = async (e) => {

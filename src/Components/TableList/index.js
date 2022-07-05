@@ -8,7 +8,7 @@ import EditModalComponent from "../EditModalComponent";
 
 function TableList() {
   const dispatch = useDispatch();
-  const URL = "http://c4f2.acsight.com:7770/api/system/sms-provider-list"; 
+  const URL = "https://c4f2.acsight.com:7770/api/system/sms-provider-list"; 
 
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
@@ -35,7 +35,7 @@ function TableList() {
       Authorization: "Bearer " + userToken,
     };
 
-    const statusURL = `http://c4f2.acsight.com:7770/api/system/change-stat-partner-sms-provider?id=${id}&stat=${newStatus === false ? false : true}`;
+    const statusURL = `https://c4f2.acsight.com:7770/api/system/change-stat-partner-sms-provider?id=${id}&stat=${newStatus === false ? false : true}`;
     try {
      const resp = await axios.post(statusURL);
      console.log('resp', resp); 

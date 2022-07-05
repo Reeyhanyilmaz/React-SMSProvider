@@ -32,7 +32,7 @@ function ModalComponent({ handleProvider, item }) {
   const userToken = useSelector((state) => state.auth.userToken);
 
   async function editProvider(values) {
-    const URL = "http://c4f2.acsight.com:7770/api/system/update-partner-sms-provider";
+    const URL = "https://c4f2.acsight.com:7770/api/system/update-partner-sms-provider";
     
     axios.defaults.headers.common = {
       Authorization: "Bearer " + userToken,
