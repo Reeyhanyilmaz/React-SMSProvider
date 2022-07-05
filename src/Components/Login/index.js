@@ -1,7 +1,7 @@
 import axios from "axios";
 import { setUserToken, setUser } from "../../redux/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
-import {Flex, Box, Heading, FormControl, FormLabel, Button, Input, Image} from "@chakra-ui/react";
+import {Flex, Box, Heading, FormControl, FormLabel, Button, Input} from "@chakra-ui/react";
 import {useNavigate} from 'react-router-dom';
 
 function Login() {
@@ -14,15 +14,14 @@ function Login() {
     e.preventDefault(); //login olunca sayfa yenilenmesini engelledim.
 
     try {
-      const resp = await axios.post(URL, new URLSearchParams({
+      const resp = await axios.post(URL, new URLSearchParams({      
           grant_type: "password",
           client_id: "ClientIdWithFullAccess",
           client_secret: "fullAccessSecret",
           username: user.email,
           password: user.password,
-        })
+        })       
       );
-
       if (resp.status === 200) {
         dispatch(setUserToken(resp.data.access_token));
         navigate("/tableList");
@@ -48,10 +47,7 @@ function Login() {
                 <Input
                   type="text"
                   placeholder="email@email.com"
-                  onChange={(e) =>
-                    dispatch(setUser({ type: "email", value: e.target.value }))
-                  }
-                />
+                  onChange={(e) => dispatch(setUser({ type: "email", value: e.target.value }))}/>
               </FormControl>
 
               <FormControl mt={4} isRequired>
@@ -59,12 +55,7 @@ function Login() {
                 <Input
                   type="password"
                   placeholder="password"
-                  onChange={(e) =>
-                    dispatch(
-                      setUser({ type: "password", value: e.target.value })
-                    )
-                  }
-                />
+                  onChange={(e) => dispatch(setUser({ type: "password", value: e.target.value }))}/>
               </FormControl>
 
               <Button
@@ -72,8 +63,7 @@ function Login() {
                 size="lg"
                 mt={4}
                 width="full"
-                type="submit"
-              >
+                type="submit">
                 Login
               </Button>
             </form>

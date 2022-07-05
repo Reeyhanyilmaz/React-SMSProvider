@@ -18,11 +18,16 @@ import { useFormik } from "formik";
 import axios from "axios";
 
 function ModalComponent({handleProvider}) {
+  //formik
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = useRef(null);
   const finalRef = useRef(null);
+
+   //providerEnums
   const providerEnums = useSelector((state) => state.provider.providerEnums);
-  const shiftEnums = providerEnums.filter((item) => item.value !== 0);
+  const shiftEnums = providerEnums.filter((item) => item.value !== 0); //ilk elemanın index 0 , filtreledim.
+
+  //token
   const userToken = useSelector((state) => state.auth.userToken);
 
   async function addNewProvider(values) {
