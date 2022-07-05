@@ -31,7 +31,7 @@ function ModalComponent({handleProvider}) {
   const userToken = useSelector((state) => state.auth.userToken);
 
   async function addNewProvider(values) {
-    const URL = "https://c4f2.acsight.com:7770/api/system/add-partner-sms-provider";
+    const URL = "http://c4f2.acsight.com:7770/api/system/add-partner-sms-provider";
     axios.defaults.headers.common = {
       Authorization: "Bearer " + userToken,
     };
