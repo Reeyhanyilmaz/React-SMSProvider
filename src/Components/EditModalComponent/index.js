@@ -31,8 +31,11 @@ function ModalComponent({ handleProvider, item }) {
   //token
   const userToken = useSelector((state) => state.auth.userToken);
 
+  //swal
+  const Swal = require('sweetalert2')
+
   async function editProvider(values) {
-    const URL = "http://c4f2.acsight.com:7770/api/system/update-partner-sms-provider";
+    const URL = "http://c4f2.acsight.com:7770/api/system/update-partner-sms-prov";
     
     axios.defaults.headers.common = {
       Authorization: "Bearer " + userToken,
@@ -47,9 +50,18 @@ function ModalComponent({ handleProvider, item }) {
         onClose();
       }
     }
-    catch (error) {
-      alert("error");
-    console.log("error", error);
+    catch (error) {     
+      onClose();
+
+      //hata olunca modal kapanacak ve swal alerti gözükecek.
+      Swal.fire({
+        icon: 'error',
+        title: 'Error...',
+        text: 'Something went wrong!',
+        showConfirmButton: false,
+        timer: 2000,
+      })
+      console.log("error", error);
   } 
 }
 
@@ -70,7 +82,24 @@ function ModalComponent({ handleProvider, item }) {
       AuthToken: item.authToken,
     },
     onSubmit: (values) => {
-      editProvider(values);
+      //submit olunca modal kapanacak ve swal alerti gözükecek. confirm olursa editlenecek, dont save  olursa editlemeyecek.
+      onClose();
+
+      Swal.fire({
+        html: "Do you want to save the changes?",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Save",
+        denyButtonText: `Don't save`,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({html: "Saved!", showConfirmButton: false, icon: "success", timer: 2000})
+          editProvider(values);
+                    
+        } else if (result.isDenied) {
+          Swal.fire({ html: "Changes are not saved", showConfirmButton: false, icon: "info", timer: 2000 })
+        }
+      });
     },
   });
 
