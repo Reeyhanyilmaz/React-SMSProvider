@@ -17,7 +17,7 @@ import { useSelector } from "react-redux";
 import { useFormik } from "formik";
 import axios from "axios";
 
-function AddModalComponent({handleProvider}) {
+function ModalComponent({handleProvider}) {
   //formik
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = useRef(null);
@@ -230,4 +230,4 @@ function AddModalComponent({handleProvider}) {
   );
 }
 
-export default AddModalComponent;
+export default ModalComponent;

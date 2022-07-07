@@ -1,9 +1,9 @@
 import { Routes, Route } from "react-router-dom";
 import './App.css';
-import Login from './Components/Login';
-import TableList from './Components/TableList';
-import Error404 from './Components/Error404';
-import Navbar from './Components/Navbar';
+import Login from './components/Login';
+import TableList from './components/TableList';
+import Error404 from './components/Error404';
+import Navbar from './components/Navbar';
 
 
 function App() {

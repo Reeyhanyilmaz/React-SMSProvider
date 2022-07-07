@@ -3,7 +3,7 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { setPartnerProviders } from "../../redux/provider/providerSlice";
 import {Flex, Table, Thead, Tbody, Tr, Th, Td, TableContainer, Alert, AlertIcon, Spinner, Switch} from "@chakra-ui/react";
-import AddModalComponent from "../AddModalComponent";
+import ModalComponent from "../ModalComponent";
 import EditModalComponent from "../EditModalComponent";
 
 function TableList() {
@@ -151,7 +151,7 @@ function TableList() {
         </Table>
       </TableContainer>     
 
-      <AddModalComponent handleProvider={handleProvider}/>
+      <ModalComponent handleProvider={handleProvider}/>
     </div>
   );
 }
