@@ -30,11 +30,15 @@ function ModalComponent({handleProvider}) {
   //token
   const userToken = useSelector((state) => state.auth.userToken);
 
+  //swal
+  const Swal = require('sweetalert2')
+
   async function addNewProvider(values) {
     const URL = "http://c4f2.acsight.com:7770/api/system/add-partner-sms-provider";
     axios.defaults.headers.common = {
       Authorization: "Bearer " + userToken,
     };
+    
     try {
       const resp = await axios.post(URL, values);
       if(resp.data.success === true) {
@@ -43,6 +47,17 @@ function ModalComponent({handleProvider}) {
       }
     }
     catch (error) {
+      onClose();
+
+      //hata olunca modal kapanacak ve swal alerti gözükecek.
+      Swal.fire({
+        icon: 'error',
+        title: 'Error...',
+        text: 'Something went wrong!',
+        showConfirmButton: false,
+        timer: 2000,
+      })
+
       console.log("error", error);
     }
   }
@@ -65,6 +80,17 @@ function ModalComponent({handleProvider}) {
     },
     onSubmit: (values) => {
       addNewProvider(values);
+
+      //başarılı olunca modal kapanacak ve swal alerti gözükecek.
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        html: 'Your work has been added',
+        showConfirmButton: false,
+        timer: 2000,
+        width: 350      
+      })
+      
     },
   });
 
