@@ -35,7 +35,7 @@ function ModalComponent({ handleProvider, item }) {
   const Swal = require('sweetalert2')
 
   async function editProvider(values) {
-    const URL = "http://c4f2.acsight.com:7770/api/system/update-partner-sms-prov";
+    const URL = "http://c4f2.acsight.com:7770/api/system/update-partner-sms-provider";
     
     axios.defaults.headers.common = {
       Authorization: "Bearer " + userToken,
